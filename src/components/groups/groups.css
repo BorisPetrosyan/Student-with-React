@@ -1,0 +1,125 @@
+.gru-contanier {
+    display: flex;
+    overflow-x: auto;
+    min-height: 450px;
+    max-height: 450px;
+    background: #fffcf7;
+    border-radius: 10px;
+}
+
+
+
+.btn {
+    border-radius: 4px;
+    border: 1px solid #708090;
+    margin-left: -240px;
+    margin-top: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #708090;
+    transition: opacity, margin-left .22s ease-in;
+    z-index: 100;
+}
+
+.btn:hover {
+    opacity: .7;
+}
+
+.btn.open {
+    margin-left: 5px;
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.fac-List > div{
+    background-color: brown;
+    height: 28px;
+    width: 200px;
+}
+.fac-List > div >p{
+    padding: 5px;
+}
+
+.fac-List > table, td, th {  
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 15px;
+  }
+
+  /* .fac-List {
+    width: 500px;
+    margin-top: 50px;
+    height: 400px;
+    overflow: auto;
+    position: absolute;
+    left: 373px;
+  } */
+  .draw_cont{
+      display: flex;
+      position: relative;
+  }
+
+  .fac-List {
+    width: 650px;
+    margin-top: 25px;
+    overflow-y: auto;
+    height: 350px;
+    overflow-y: auto;
+    height: 358px;
+    border: 1px solid #fffcf7;
+  }
+
+  
+
+  .fac-List th {
+    text-align: left;
+    top: 0;
+    position: sticky;
+    background-color: white;
+  }
+  
+  
+
+  .animated {
+    animation-duration: 500ms;
+    animation-fill-mode: both;
+  }
+  
+  .animated.infinite {
+    animation-iteration-count: infinite;
+  }
+  
+  .animated.hinge {
+    animation-duration: 2s;
+  }
+  
+  .animated.flipOutX,
+  .animated.flipOutY,
+  .animated.bounceIn,
+  .animated.bounceOut {
+    animation-duration: .75s;
+  }
+
+  
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .fadeIn {
+    animation-name: fadeIn;
+  }
+  

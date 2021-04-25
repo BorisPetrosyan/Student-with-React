@@ -1,0 +1,45 @@
+.studentDrawer {
+
+    width: 250px;
+    height: 450px;
+    
+    max-width: 300px;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    background:#e7e7e7;
+    transform: translateX(0px);
+    transition: transform .22s ease-in;
+    z-index: 90;
+}
+
+.studentDrawer.close {
+    transform: translateX(-300px);
+}
+.studentDrawer> p {
+    text-align: center;
+    color: #949fa8;
+}
+.studentDrawer > form > input {
+    
+    margin: 0px 32px 18px;
+    height: 30px;
+    margin-top: 5px;
+}
+.studentDrawer > form > select {
+    outline: none;
+    width: 162px;
+    margin: 0px 32px 18px;
+    height: 30px;
+    margin-top: 5px;
+}
+
+.studentDrawer > form button {
+    margin-left: 93px; 
+     margin-top: 0px;
+}
+.invalid {
+    position: absolute;
+    color: red;
+    font-size: 11px;
+    margin: -17px 0 15px 34px;
+}

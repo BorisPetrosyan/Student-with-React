@@ -1,0 +1,7 @@
+.stu-contanier {
+    overflow-x: auto;
+    min-height: 350px;
+    max-height: 800px;
+    background: #fffcf7;
+    border-radius: 10px;
+}

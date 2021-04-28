@@ -1,99 +1,176 @@
-import React from 'react'
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form'
-
-import { useDispatch } from 'react-redux'
-import { acceptChanges, deleteFaculty, inputFaculty } from '../redux/actions/actions'
-import { ACCEPT_CHANGES, DELETE_FACULTY, INPUT_CHANGE } from '../redux/ActionTypes/actionTypes'
-import { schema } from '../UI/schema/schema';
-
+import React, { useState, Fragment } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import Backdrop from '../Backdrop/Backdrop'
+import { useDispatch } from "react-redux";
+import {
+  acceptChanges,
+  deleteFaculty,
+  inputFaculty,
+} from "../redux/actions/actions";
+import {
+  ACCEPT_CHANGES,
+  DELETE_FACULTY,
+  FACULTY_INPUT_CHANGE,
+} from "../redux/ActionTypes/actionTypes";
+import { schema } from "../UI/schema/schema";
 
 export const FacultyList = ({ faculties }) => {
 
 
 
+  const [noInput, setnoInput] = useState(true);
+  const [inputId, setinputId] = useState('');;
+  const [oldFacultyValue, setoldFacultyValue] = useState('')
 
-    const dispatch = useDispatch()
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
-        resolver: yupResolver(schema('faculty'))
-    });
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema("faculty")),
+  });
 
-    function onSubmit(formData) {
+  function onSubmit(formData) {
+    formData.id = inputId
+    formData.oldValue = oldFacultyValue
+    dispatch(
+      acceptChanges({
+        type: ACCEPT_CHANGES,
+        payload: formData
 
-        console.log(formData)
-        reset()
-
-    }
-    return (
-        <div className="fac-List">
-            <table >
-                <tbody>
-                    <tr>
-                        <th >id</th>
-                        <th>faculty</th>
-                        <th></th>
-
-                    </tr>
-                    {
-                        faculties.map(fac => (
-                            <tr key={fac.id} className="animated fadeIn">
-                                <td style={{ fontWeight: 550 }}>{fac.id}</td>
-
-                                {
-                                    fac.input ? <td style={{ padding: 0 }}>
-                                        <form onSubmit={handleSubmit(onSubmit)}>
-                                            <input
-                                                {...register('faculty')}
-                                                name='faculty'
-                                                type="text"
-                                                className='animated fadeIn'
-                                            // value={fac.facultyName}
-                                            />
-                                            <span style={{ width: 5 }}>
-                                                <input
-                                                    type="image"
-                                                    // value={fac.facultyName}
-                                                    className='animated fadeIn'
-                                                    src='/accept.svg'
-                                                    alt="Logo"
-
-                                                />
-
-                                            </span>
-                                            <span style={{ width: 5, marginLeft: 16 }}>
-                                                <input
-
-                                                    type="image"
-                                                    className='animated fadeIn'
-                                                    src='/close.svg'
-                                                    alt="Logo"
-                                                    onClick={() => dispatch(inputFaculty({ type: INPUT_CHANGE, payload: fac.id, input: false }))}
-                                                />
-                                            </span>
-                                        </form>
-                                    </td>
-                                        :
-                                        <td onDoubleClick={() => dispatch(
-                                            inputFaculty({ type: INPUT_CHANGE, payload: fac.id, input: true })
-                                        )}>
-                                            {fac.facultyName}</td>
-                                }
-
-                                <td style={{ width: 5 }}>
-                                    <span><img onClick={() =>
-                                        dispatch(deleteFaculty({
-                                            type: DELETE_FACULTY, payload:
-                                                { id: fac.id, name: fac.facultyName }
-                                        }))}
-                                        src='/delete.png' alt="Logo" /></span></td>
-                            </tr>
-
-                        ))
-                    }
-                </tbody>
-            </table>
-        </div>
+      })
     )
-}
+
+    setnoInput(true)
+    reset();
+  }
 
 
+  return (
+    <div className="fac-List" style={!noInput ? { overflowY: 'hidden' } : null}>
+
+      <table style={{ position: 'relative' }}>
+        <tbody >
+          <tr>
+            <th style={{ width: 50 }}>id</th>
+            <th>faculty</th>
+            <th></th>
+          </tr>
+
+          {!noInput ? <Backdrop /> : null}
+
+          {faculties.map((fac) => (
+            <Fragment key={fac.id}>
+              <tr key={fac.id} className="animated fadeIn">
+                <td style={{ fontWeight: 550 }}>{fac.id}</td>
+
+                {fac.input ? (
+
+                  <td style={{ padding: 0 }}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+
+                      <input
+                        {...register("faculty")}
+
+                        name="faculty"
+                        type="text"
+                        id={fac.id}
+                        className="animated fadeInRight"
+                        defaultValue={fac.facultyName}
+                      />
+                      {errors.faculty && <p className='invalid animated fadeIn' style={{ margin: '-14px 0px 20px 21px', fontSize: 8 }}>{errors.faculty.message}</p>}
+                      <span style={{ width: 5 }}>
+                        <input
+                          // onClick={(e) => getId(e.target.id)}
+                          type="image"
+                          id={fac.id}
+                          value={fac.facultyName}
+                          className="animated fadeInRight"
+                          style={{ marginBottom: -8, border: 0, width: 20 }}
+                          src="/accept.svg"
+                          alt="Logo"
+                        />
+                      </span>
+                      <span style={{ width: 5, marginLeft: 16 }} >
+                        <input
+                          type="image"
+                          className="animated fadeInRight"
+                          style={{ marginBottom: -8, border: 0, width: 20 }}
+                          src="/close.svg"
+                          alt="Logo"
+                          onClick={() =>
+                            dispatch(
+                              inputFaculty({
+                                type: FACULTY_INPUT_CHANGE,
+                                payload: fac.id,
+                                input: false,
+                              },
+                                setnoInput(true)),
+                              reset()
+                            )
+
+                          }
+                        />
+                      </span>
+                    </form>
+                  </td>
+                ) : (
+                  <>
+                    <td
+                      className="animatedd fadeIn"
+
+                      onDoubleClick={() => {
+                        if (!noInput) return
+
+                        return dispatch(
+                          inputFaculty({
+                            type: FACULTY_INPUT_CHANGE,
+                            payload: fac.id,
+                            input: true,
+                          }),
+                          setnoInput(false),
+                          setinputId(fac.id),
+                          setoldFacultyValue(fac.facultyName)
+                        )
+                      }}
+                    >
+                      {fac.facultyName}
+                    </td>
+                  </>
+                )}
+
+                <td style={{ width: 5 }}>
+
+                  <span>
+
+                    <img
+                      style={!noInput ? { opacity: 0.1, cursor: 'unset' } : null}
+                      onClick={() => {
+                        if (!noInput) return
+                        return dispatch(
+                          deleteFaculty({
+                            type: DELETE_FACULTY,
+                            payload: { id: fac.id, name: fac.facultyName },
+                          })
+                        )
+                      }
+                      }
+                      src="/delete.png"
+                      alt="Logo"
+                    />
+                  </span>
+                </td>
+              </tr>
+            </Fragment>
+          ))}
+
+        </tbody>
+      </table>
+    </div>
+
+
+  );
+};

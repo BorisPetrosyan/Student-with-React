@@ -108,6 +108,29 @@
     animation-duration: .75s;
   }
 
+
+  
+  .animatedd {
+    animation-duration: 900ms;
+    animation-fill-mode: both;
+  }
+  
+  .animatedd.infinite {
+    animation-iteration-count: infinite;
+  }
+  
+  .animatedd.hinge {
+    animation-duration: 2s;
+  }
+  
+  .animatedd.flipOutX,
+  .animatedd.flipOutY,
+  .animatedd.bounceIn,
+  .animatedd.bounceOut {
+    animation-duration: 10.5s;
+  }
+
+
   
 @keyframes fadeIn {
     from {

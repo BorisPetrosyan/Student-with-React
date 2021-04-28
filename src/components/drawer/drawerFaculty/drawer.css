@@ -39,7 +39,7 @@
 }
 .invalid {
     position: absolute;
-    color: red;
+    color: #f54040;
     font-size: 11px;
     margin: -17px 0 15px 34px;
 }

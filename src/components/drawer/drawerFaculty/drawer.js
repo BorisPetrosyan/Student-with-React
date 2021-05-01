@@ -28,7 +28,7 @@ export const Drawer = ({ Open, toggle, id, drawerHeader, faculties, forScema }) 
         reset()
 
     }
-
+   
     return (
 
         <div>

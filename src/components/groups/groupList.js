@@ -1,10 +1,10 @@
-import React, { useState, Fragment, useEffect } from 'react'
+import React, { useState, Fragment } from 'react'
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { schema } from '../UI/schema/schema';
 import { useDispatch } from "react-redux";
-import { acceptChangesGroup, closeEditGroup, inputGroup } from '../redux/actions/actions'
-import { GROUP_INPUT_CHANGE, DELETE_GROUP, ACCEPT_CHANGES_GROUP, CLOSE_EDIT_GROUP } from '../redux/ActionTypes/actionTypes';
+import { acceptChangesGroup, inputGroup } from '../redux/actions/actions'
+import { GROUP_INPUT_CHANGE, DELETE_GROUP, ACCEPT_CHANGES_GROUP } from '../redux/ActionTypes/actionTypes';
 import { deleteGroup } from "../redux/actions/actions";
 import Backdrop from '../Backdrop/Backdrop';
 export const GroupList = ({ groups, faculties }) => {
@@ -12,7 +12,7 @@ export const GroupList = ({ groups, faculties }) => {
 
   const [noInput, setnoInput] = useState(true)
   const [inputId, setinputId] = useState('')
-  const [oldFacultyValue, setoldFacultyValue] = useState('')
+  // const [oldFacultyValue, setoldFacultyValue] = useState('')
   const [oldGroupValue, setoldGroupValue] = useState('')
 
 
@@ -26,33 +26,17 @@ export const GroupList = ({ groups, faculties }) => {
   });
   const dispatch = useDispatch();
 
-  function a() {
 
-  }
 
-  useEffect(() => {
-
-    dispatch(
-      closeEditGroup({
-        type: CLOSE_EDIT_GROUP,
-        groups,
-      })
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])  //not [dispatch, groups]
-
+  console.log(errors)
 
   function onSubmit(formData) {
     formData.id = inputId
-
-
     dispatch(
       acceptChangesGroup({
         type: ACCEPT_CHANGES_GROUP,
         payload: formData
-
       }),
-
     )
 
     setnoInput(true)
@@ -143,7 +127,6 @@ export const GroupList = ({ groups, faculties }) => {
                           }),
                           setnoInput(false),
                           setinputId(group.id),
-                          setoldFacultyValue(group.facultyName),
                           setoldGroupValue(group.facultyName)
                         )
                       }}

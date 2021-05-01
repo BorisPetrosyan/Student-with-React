@@ -21,6 +21,7 @@
     z-index: 100;
 }
 
+
 .btn:hover {
     opacity: .7;
 }
@@ -29,6 +30,11 @@
     margin-left: 5px;
     background-color: #ff4d4d;
     color: white;
+}
+.btn.openn {
+  margin-left: 250px;
+  background-color: #ff4d4d;
+  color: white;
 }
 
 .fac-List > div{
@@ -54,14 +60,6 @@
     padding: 15px;
   }
 
-  /* .fac-List {
-    width: 500px;
-    margin-top: 50px;
-    height: 400px;
-    overflow: auto;
-    position: absolute;
-    left: 373px;
-  } */
   .draw_cont{
       display: flex;
       position: relative;
@@ -111,7 +109,7 @@
 
   
   .animatedd {
-    animation-duration: 900ms;
+    animation-duration: 1200ms;
     animation-fill-mode: both;
   }
   
@@ -130,6 +128,25 @@
     animation-duration: 10.5s;
   }
 
+  .animateddd {
+    animation-duration: 2900ms;
+    animation-fill-mode: both;
+  }
+  
+  .animateddd.infinite {
+    animation-iteration-count: infinite;
+  }
+  
+  .animateddd.hinge {
+    animation-duration: 2s;
+  }
+  
+  .animateddd.flipOutX,
+  .animateddd.flipOutY,
+  .animateddd.bounceIn,
+  .animateddd.bounceOut {
+    animation-duration: 10.5s;
+  }
 
   
 @keyframes fadeIn {

@@ -23,17 +23,11 @@ export const Groups = () => {
   const toggle = () => setIsOpen(!isOpen);
 
   const dispatch = useDispatch();
-
   useEffect(() => {
-
-    dispatch(
-      closeEditGroup({
-        type: CLOSE_EDIT_GROUP,
-        groups,
-      })
+    return () => dispatch(
+      closeEditGroup()
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])  //not [dispatch, groups]
+  }, [closeEditGroup])
 
 
 

@@ -4,6 +4,7 @@ import {
   ADD_FACULTY,
   ADD_GROUP,
   ADD_STUDENT,
+  CLEAR_TYPINGS_SEARCH,
   CLOSE_EDIT_FACULTY,
   CLOSE_EDIT_GROUP,
   DELETE_FACULTY,
@@ -17,16 +18,16 @@ import {
 } from "./ActionTypes/actionTypes";
 
 const initialState = {
-  students:[
-    { id: 1, firstName: "Boris" , lastName:'Petrosyan', email:'114boko@gmail.com' , phone:'+37494384212', faculty:'fizka', group: "Group2"},
-    { id: 2, firstName: "Sevak" , lastName:'Stepanyan', email:'sekoo@gmail.com' , phone:'+3244234424', faculty:'English', group: "Group3"}
+  students: [
+    { id: 1, firstName: "Boris", lastName: 'Petrosyan', email: '114boko@gmail.com', phone: '+37494384212', faculty: 'fizka', group: "Group2" },
+    { id: 2, firstName: "Sevak", lastName: 'Stepanyan', email: 'sekoo@gmail.com', phone: '+3244234424', faculty: 'English', group: "Group3" }
   ],
 
-  dashboardFilter:[],
-  searchTypings:{
-    firstName:'',
-    lastName:'',
-    email:'',
+  dashboardFilter: [],
+  searchTypings: {
+    firstName: '',
+    lastName: '',
+    email: '',
     phone: '',
     faculty: '',
     group: ''
@@ -57,26 +58,26 @@ export default function rootReducer(state = initialState, action) {
     case ADD_GROUP:
       console.log(action)
       return { ...state, groups: [...state.groups, action.groups] };
-  
+
     case ADD_STUDENT:
       console.log(action)
-    return { ...state, students: [...state.students, action.students] };
-  
+      return { ...state, students: [...state.students, action.students] };
+
     case DELETE_FACULTY:
-      return { ...state, faculties: action.faculties, groups: action.groups ,students: action.students  };
+      return { ...state, faculties: action.faculties, groups: action.groups, students: action.students };
 
     case DELETE_GROUP:
-      return { ...state, groups: action.groups ,students: action.students};
+      return { ...state, groups: action.groups, students: action.students };
 
 
     case DELETE_STUDENT:
-      return { ...state,students: action.students};
-  
+      return { ...state, students: action.students };
+
     case FACULTY_INPUT_CHANGE:
       return { ...state, faculties: action.faculties };
-      case STUDENT_INPUT_CHANGE:
-        return { ...state, students: action.students };
-  
+    case STUDENT_INPUT_CHANGE:
+      return { ...state, students: action.students };
+
     case GROUP_INPUT_CHANGE:
       return { ...state, groups: action.groups };
 
@@ -101,13 +102,17 @@ export default function rootReducer(state = initialState, action) {
 
       return { ...state, groups: action.groups };
 
-      case FILTER_STUDENTS:
+    case FILTER_STUDENTS:
       console.log(action)
-        return { ...state, dashboardFilter: action.dashboardFilter  }; 
+      return { ...state, dashboardFilter: action.dashboardFilter };
 
-      case SEARCH_TYPINGS:
-          
-        return { ...state , searchTypings :  action.searchTypings };     
+    case SEARCH_TYPINGS:
+
+      return { ...state, searchTypings: action.searchTypings };
+
+    case CLEAR_TYPINGS_SEARCH:
+
+      return { ...state, searchTypings: action.searchTypings };
 
     default:
       return state;

@@ -6,7 +6,6 @@ import './faculties.css'
 import { Buttom } from '../UI/Btn'
 import { FacultyList } from './facultyList'
 import { closeEditFaculty } from '../redux/actions/actions'
-import { CLOSE_EDIT_FACULTY } from '../redux/ActionTypes/actionTypes'
 
 export const Faculties = () => {
 
@@ -17,14 +16,11 @@ export const Faculties = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(
-            closeEditFaculty({
-                type: CLOSE_EDIT_FACULTY,
-                faculties,
-            })
-        );
+        return () => dispatch(
+            closeEditFaculty()
+        )
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])  //not [dispatch, faculties]
+    }, [closeEditFaculty])
 
 
 

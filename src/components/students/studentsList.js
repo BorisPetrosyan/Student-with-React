@@ -26,7 +26,7 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
 
   const dispatch = useDispatch();
 
-  const [oldGroupValue, setoldGroupValue] = useState("");
+  // const [oldGroupValue, setoldGroupValue] = useState("");
   //   console.log(oldGroupValue);
   const {
     register,
@@ -39,12 +39,12 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
 
   function onSubmit(data) {
     data.id = inputId;
-    // dispatch(
-    //   acceptChangesStudnet({
-    //     type: ACCEPT_CHANGES_STUDENT,
-    //     payload: data,
-    //   })
-    // );
+    dispatch(
+      acceptChangesStudnet({
+        type: ACCEPT_CHANGES_STUDENT,
+        payload: data,
+      })
+    );
     console.log(data);
     setnoInput(false);
     reset();
@@ -71,7 +71,7 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
     // setisGroup(false);
     errors.faculty = {};
     setselectFaculty(e);
-    reset();
+    // reset();
     // setisGroup(true);
   }
 
@@ -82,8 +82,8 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
         !noInput
           ? { overflowY: "hidden" }
           : null || forDashBorad
-          ? { margin: "0 0 0 16px" }
-          : null
+            ? { margin: "0 0 0 16px" }
+            : null
       }
     >
       <table style={{ position: "relative" }}>
@@ -111,7 +111,8 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
 
               {student.input ? (
                 <Td
-                  reg={{ ...register("firstName") }}
+                  name='firstName'
+                  reg={register}
                   firstName={student.firstName}
                   errors={errors}
                   buttons={false}
@@ -123,6 +124,8 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
 
               {student.input ? (
                 <Td
+                  name='lastName'
+                  reg={register}
                   firstName={student.lastName}
                   errors={errors}
                   buttons={false}
@@ -134,6 +137,8 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
 
               {student.input ? (
                 <Td
+                  reg={register}
+                  name='email'
                   firstName={student.email}
                   errors={errors}
                   buttons={false}
@@ -144,6 +149,8 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
               )}
               {student.input ? (
                 <Td
+                  reg={register}
+                  name='phone'
                   firstName={student.phone}
                   errors={errors}
                   buttons={true}

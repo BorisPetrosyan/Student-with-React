@@ -10,7 +10,7 @@ import { setStudent } from "../../redux/actions/actions";
 
 export const StudentDrawer = ({ Open, toggle, faculties, groups,id }) => {
 
-    // console.log(faculties)
+   
     const [isGroup, setisGroup] = useState(false)
     const [selectFaculty, setselectFaculty] = useState('')
 
@@ -27,8 +27,6 @@ export const StudentDrawer = ({ Open, toggle, faculties, groups,id }) => {
 
 
     function onSubmit(data) {
-        console.log(data)
-      
         dispatch(setStudent({ type: ADD_STUDENT, payload: data, id: id + 1 }))
         toggle()
         reset()
@@ -46,102 +44,105 @@ export const StudentDrawer = ({ Open, toggle, faculties, groups,id }) => {
     }
 
  
+    
+    return (
+      <div style={Open ? { zIndex: 10 } : null  }>
+        <div className={Open ? "drawer " : "drawer close"}>
+          <p> Create Student</p>
+          <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+            <input
+              type="text"
+              className={Open ? "animated fadeInRight" : null}
+              {...register("firstName")}
+              placeholder="First Name"
+              name="firstName"
+            />
+            {errors.firstName && (
+              <p className="invalid">{errors.firstName.message}</p>
+            )}
+            <input
+              className={Open ? "animated fadeInLeft" : null}
+              type="text"
+              {...register("lastName")}
+              placeholder="Last Name"
+              name="lastName"
+            />
+            {errors.lastName && (
+              <p className="invalid">{errors.lastName.message}</p>
+            )}
 
-    return <div style={ Open ? {zIndex:10} : {zIndex:null}}>
-            <div className={Open ? "drawer " : "drawer close"}>
-              <p> Create Student</p>
-                <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-                <input
-                    type='text'
-                    className={Open ? "animated fadeInRight" : null}
-                   {...register("firstName")}
-                    placeholder="First Name"
-                    name="firstName"
+            <input
+              {...register("email")}
+              className={Open ? "animated fadeInRight" : null}
+              type="email"
+              placeholder="E-mail"
+              name="email"
+            />
+            {errors.email && <p className="invalid">{errors.email.message}</p>}
 
-                />
-                {errors.firstName && <p className='invalid'>{errors.firstName.message}</p>}
-                <input
-                    className={Open ? "animated fadeInLeft" : null}
+            <input
+              className={Open ? "animated fadeInLeft" : null}
+              type="number"
+              {...register("phone")}
+              placeholder="Phone Number"
+              name="phone"
+            />
+            {errors.phone && <p className="invalid">{errors.phone.message}</p>}
 
-                    type='text'
-                    {...register("lastName")}
-                    placeholder="Last Name"
-                    name="lastName"
+            <select
+              className={Open ? "animated fadeInUp" : null}
+              name="faculty"
+              {...register("faculty")}
+              onChange={(e) => {
+                changeFaculty(e.target.value);
+              }}
+            >
+              <option value="">choose faculty</option>
+              {faculties.map((fac) => (
+                <option value={fac.facultyName} key={fac.id}>
+                  {fac.facultyName}
+                </option>
+              ))}
+            </select>
 
-                />
-                {errors.lastName && <p className='invalid'>{errors.lastName.message}</p>}
+            {errors.faculty && (
+              <p className="invalid">{errors.faculty.message}</p>
+            )}
 
-                <input
-                
-                    {...register("email")}
-                    className={Open ? "animated fadeInRight" : null}
-
-                    type='email'
-                    placeholder="E-mail"
-                    name='email'
-                />
-                {errors.email && <p className='invalid'>{errors.email.message}</p>}
-
-                <input
-                    className={Open ? "animated fadeInLeft" : null}
-
-                    type='number'
-                    {...register("phone")}
-                    placeholder="Phone Number"
-                    name="phone"
-                />
-                {errors.phone && <p className='invalid'>{errors.phone.message}</p>}
-
+            {isGroup ? (
+              <>
+                {" "}
                 <select
-                    className={Open ? "animated fadeInUp" : null}
-
-                    name='faculty'
-                    {...register("faculty")}
- 
-                 onChange={(e) => { changeFaculty(e.target.value)   }}
-                 >
-                    <option  value="">choose faculty</option>
-                    {
-                        faculties.map(fac => (
-                            <option value={fac.facultyName} key={fac.id}>{fac.facultyName}</option>
-                        ))
-                    }
+                  className="fadeInDown animatedd"
+                  name="group"
+                  {...register("group")}
+                >
+                  <option value="">choose group</option>
+                  {groups
+                    .filter((group) => group.facultyName === selectFaculty)
+                    .map((group) => (
+                      <option value={group.groupName} key={group.id}>
+                        {group.groupName}
+                      </option>
+                    ))}
                 </select>
-                
-                {errors.faculty && <p className='invalid'>{errors.faculty.message}</p>}
+                {errors.group && (
+                  <p className="invalid">{errors.group.message}</p>
+                )}
+              </>
+            ) : null}
 
-                {isGroup ?
-                    <> <select 
-                    className='fadeInDown animatedd'
-                    name='group'
-                    {...register("group")}
-                    >
-                        <option value="">choose group</option>
-                        {
-                            groups.filter(group => group.facultyName === selectFaculty).map(group => (
-                                <option value={group.groupName} key={group.id}>{group.groupName}</option>
-                            ))
-                        }
-                    </select>
-                    {errors.group && <p className='invalid'>{errors.group.message}</p>}
-                    </>
-                    :
-                    null
-                }
-
-                <div>
-                    <button
-                    className={Open ? "animatedd flipInX btn" : null}
-
-                        type="submit"
-                        // className="btn"
-                    >Save
-                        </button>
-                </div>
-
-
-            </form>
+            <div>
+              <button
+                className={Open ? "animatedd flipInX btn" : null}
+                type="submit"
+                // className="btn"
+              >
+                Save
+              </button>
+            </div>
+          </form>
         </div>
-
-    </div >
+      </div>
+    );
 }

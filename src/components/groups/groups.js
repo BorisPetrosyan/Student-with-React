@@ -7,29 +7,22 @@ import { closeEditGroup } from "../redux/actions/actions.js";
 import { useDispatch } from "react-redux";
 
 import "./groups.css";
-import { CLOSE_EDIT_GROUP } from "../redux/ActionTypes/actionTypes";
+import { getData } from "../redux/actions/fbActions";
+
 
 export const Groups = () => {
-
-
   const faculties = useSelector((state) => state.faculties);
   const groups = useSelector((state) => state.groups);
-
-
-  console.log(groups)
   const [isOpen, setIsOpen] = useState(false);
-
-
   const toggle = () => setIsOpen(!isOpen);
 
+  
   const dispatch = useDispatch();
   useEffect(() => {
-    return () => dispatch(
-      closeEditGroup()
-    );
-  }, [closeEditGroup])
+    dispatch(getData("groups"));
 
-
+    return () => dispatch(closeEditGroup());
+  }, [dispatch]);
 
   return (
     <div className="gru-contanier">

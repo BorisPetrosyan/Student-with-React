@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { clearTypings, multiFilter, typingChange } from '../redux/actions/actions';
+import { getData } from "../redux/actions/fbActions";
 import { SEARCH_TYPINGS } from '../redux/ActionTypes/actionTypes';
 import { StudentsList } from "../students/studentsList";
 import './Dashboard.css'
@@ -62,11 +63,12 @@ export const Dashboard = () => {
 
   }
   useEffect(() => {
-    return () => dispatch(
-      clearTypings()
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    dispatch(getData("students"));
+    dispatch(getData("groups"));
+    dispatch(getData("faculties"));
+
+    return () => dispatch(clearTypings());
+  }, [dispatch]);
 
 
 

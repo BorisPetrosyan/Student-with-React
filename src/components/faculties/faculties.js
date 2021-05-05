@@ -6,7 +6,7 @@ import './faculties.css'
 import { Buttom } from '../UI/Btn'
 import { FacultyList } from './facultyList'
 import { closeEditFaculty } from '../redux/actions/actions'
-
+import { getData } from "../redux/actions/fbActions";
 export const Faculties = () => {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -14,13 +14,12 @@ export const Faculties = () => {
 
     const faculties = useSelector(state => state.faculties)
     const dispatch = useDispatch()
-
+    
     useEffect(() => {
-        return () => dispatch(
-            closeEditFaculty()
-        )
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [closeEditFaculty])
+      dispatch(getData("faculties"));
+
+      return () => dispatch(closeEditFaculty());
+    }, [dispatch]);
 
 
 

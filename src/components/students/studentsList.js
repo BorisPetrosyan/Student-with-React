@@ -20,14 +20,9 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
   const [noInput, setnoInput] = useState(true);
   const [selectFaculty, setselectFaculty] = useState("");
   const [inputId, setinputId] = useState("");
-
-  // const [selectGroup, setselectGroup] = useState("");
-  // const [isGroup, setisGroup] = useState(false);
-
   const dispatch = useDispatch();
 
-  // const [oldGroupValue, setoldGroupValue] = useState("");
-  //   console.log(oldGroupValue);
+
   const {
     register,
     handleSubmit,
@@ -45,8 +40,8 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
         payload: data,
       })
     );
-    console.log(data);
-    setnoInput(false);
+   
+    setnoInput(true);
     reset();
   }
 
@@ -82,11 +77,12 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
         !noInput
           ? { overflowY: "hidden" }
           : null || forDashBorad
-            ? { margin: "0 0 0 16px" }
-            : null
+          ? { margin: "0 0 0 16px" }
+          : null
       }
-    >
+     >
       <table style={{ position: "relative" }}>
+        <>
         <tbody>
           <tr>
             <th style={{ width: 1 }}>id</th>
@@ -111,7 +107,7 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
 
               {student.input ? (
                 <Td
-                  name='firstName'
+                  name="firstName"
                   reg={register}
                   firstName={student.firstName}
                   errors={errors}
@@ -124,7 +120,7 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
 
               {student.input ? (
                 <Td
-                  name='lastName'
+                  name="lastName"
                   reg={register}
                   firstName={student.lastName}
                   errors={errors}
@@ -138,7 +134,7 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
               {student.input ? (
                 <Td
                   reg={register}
-                  name='email'
+                  name="email"
                   firstName={student.email}
                   errors={errors}
                   buttons={false}
@@ -150,7 +146,7 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
               {student.input ? (
                 <Td
                   reg={register}
-                  name='phone'
+                  name="phone"
                   firstName={student.phone}
                   errors={errors}
                   buttons={true}
@@ -182,7 +178,7 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
                   </select>
                 </td>
               ) : (
-                <td>{student.faculty}</td>
+                <td className="animatedd fadeIn">{student.faculty}</td>
               )}
 
               {student.input ? (
@@ -293,6 +289,7 @@ export const StudentsList = ({ students, faculties, groups, forDashBorad }) => {
             </tr>
           ))}
         </tbody>
+        </>
       </table>
     </div>
   );

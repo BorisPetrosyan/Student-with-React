@@ -2,6 +2,7 @@ import React, { useState, Fragment } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import Backdrop from '../Backdrop/Backdrop'
+
 import { useDispatch } from "react-redux";
 import {
   acceptChanges,
@@ -14,6 +15,7 @@ import {
   FACULTY_INPUT_CHANGE,
 } from "../redux/ActionTypes/actionTypes";
 import { schema } from "../UI/schema/schema";
+
 
 export const FacultyList = ({ faculties }) => {
 
@@ -34,8 +36,11 @@ export const FacultyList = ({ faculties }) => {
   });
 
   function onSubmit(formData) {
+
     formData.id = inputId
     formData.oldValue = oldFacultyValue
+    
+
     dispatch(
       acceptChanges({
         type: ACCEPT_CHANGES,
@@ -44,16 +49,21 @@ export const FacultyList = ({ faculties }) => {
       })
     )
 
+
     setnoInput(true)
     reset();
   }
 
 
   return (
-    <div className="fac-List" style={!noInput ? { overflowY: 'hidden' } : null}>
-
-      <table style={{ position: 'relative' }}>
-        <tbody >
+    <div className="fac-List" style={!noInput ? { overflowY: "hidden" } : null}>
+      <table style={{ position: "relative" }}>
+        <tbody>
+          {noInput ? (
+            <tr style={{display:'none'}}>
+              <td></td>
+            </tr>
+          ) : null}
           <tr>
             <th style={{ width: 50 }}>id</th>
             <th>faculty</th>
@@ -65,23 +75,27 @@ export const FacultyList = ({ faculties }) => {
           {faculties.map((fac) => (
             <Fragment key={fac.id}>
               <tr key={fac.id} className="animated fadeIn">
-                <td style={{ fontWeight: 550 }}>{fac.id}</td>
+                <td style={{ fontWeight: 550 ,fontSize:10}}>{fac.id.slice(0,10)} <br/>  {fac.id.slice(10,20)}</td>
 
                 {fac.input ? (
-
                   <td style={{ padding: 0 }}>
                     <form onSubmit={handleSubmit(onSubmit)}>
-
                       <input
                         {...register("faculty")}
-
                         name="faculty"
                         type="text"
                         id={fac.id}
                         className="animated fadeInRight"
                         defaultValue={fac.facultyName}
                       />
-                      {errors.faculty && <p className='invalid animated fadeIn' style={{ margin: '-14px 0px 20px 21px', fontSize: 8 }}>{errors.faculty.message}</p>}
+                      {errors.faculty && (
+                        <p
+                          className="invalid animated fadeIn"
+                          style={{ margin: "-14px 0px 20px 21px", fontSize: 8 }}
+                        >
+                          {errors.faculty.message}
+                        </p>
+                      )}
                       <span style={{ width: 5 }}>
                         <input
                           // onClick={(e) => getId(e.target.id)}
@@ -94,7 +108,7 @@ export const FacultyList = ({ faculties }) => {
                           alt="Logo"
                         />
                       </span>
-                      <span style={{ width: 5, marginLeft: 16 }} >
+                      <span style={{ width: 5, marginLeft: 16 }}>
                         <input
                           type="image"
                           className="animated fadeInRight"
@@ -103,15 +117,16 @@ export const FacultyList = ({ faculties }) => {
                           alt="Logo"
                           onClick={() =>
                             dispatch(
-                              inputFaculty({
-                                type: FACULTY_INPUT_CHANGE,
-                                payload: fac.id,
-                                input: false,
-                              },
-                                setnoInput(true)),
+                              inputFaculty(
+                                {
+                                  type: FACULTY_INPUT_CHANGE,
+                                  payload: fac.id,
+                                  input: false,
+                                },
+                                setnoInput(true)
+                              ),
                               reset()
                             )
-
                           }
                         />
                       </span>
@@ -121,9 +136,8 @@ export const FacultyList = ({ faculties }) => {
                   <>
                     <td
                       className="animatedd fadeIn"
-
                       onDoubleClick={() => {
-                        if (!noInput) return
+                        if (!noInput) return;
 
                         return dispatch(
                           inputFaculty({
@@ -134,7 +148,7 @@ export const FacultyList = ({ faculties }) => {
                           setnoInput(false),
                           setinputId(fac.id),
                           setoldFacultyValue(fac.facultyName)
-                        )
+                        );
                       }}
                     >
                       {fac.facultyName}
@@ -143,21 +157,20 @@ export const FacultyList = ({ faculties }) => {
                 )}
 
                 <td style={{ width: 5 }}>
-
                   <span>
-
                     <img
-                      style={!noInput ? { opacity: 0.1, cursor: 'unset' } : null}
+                      style={
+                        !noInput ? { opacity: 0.1, cursor: "unset" } : null
+                      }
                       onClick={() => {
-                        if (!noInput) return
+                        if (!noInput) return;
                         return dispatch(
                           deleteFaculty({
                             type: DELETE_FACULTY,
                             payload: { id: fac.id, name: fac.facultyName },
                           })
-                        )
-                      }
-                      }
+                        );
+                      }}
                       src="/delete.png"
                       alt="Logo"
                     />
@@ -166,11 +179,8 @@ export const FacultyList = ({ faculties }) => {
               </tr>
             </Fragment>
           ))}
-
         </tbody>
       </table>
     </div>
-
-
   );
 };

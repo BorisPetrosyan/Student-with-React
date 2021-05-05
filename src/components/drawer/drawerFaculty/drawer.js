@@ -20,13 +20,20 @@ export const Drawer = ({ Open, toggle, id, drawerHeader, faculties, forScema }) 
     if (!Open) errors.group = {}
 
 
-    function onSubmit(formData) {
-        console.log(formData)
-        if (drawerHeader === 'Faculty') dispatch(setFaculty({ type: ADD_FACULTY, payload: formData.faculty, id: id + 1 }))
-        if (drawerHeader === 'Group') dispatch(setGroup({ type: ADD_GROUP, payload: formData, id: id + 1 }))
-        toggle()
-        reset()
-
+    async function onSubmit(formData) {
+      if (drawerHeader === "Faculty") {
+        dispatch(
+          setFaculty({
+            type: ADD_FACULTY,
+            payload: formData.faculty,
+            id: id + 1,
+          })
+        );
+      }
+      if (drawerHeader === "Group")
+        dispatch(setGroup({ type: ADD_GROUP, payload: formData, id: id + 1 }));
+      toggle();
+      reset();
     }
    
     return (

@@ -1,5 +1,6 @@
 
 
+import { db } from "../../../config/fbConfig";
 import {
   ACCEPT_CHANGES,
   ACCEPT_CHANGES_GROUP,
@@ -16,15 +17,29 @@ import {
   STUDENT_INPUT_CHANGE,
   FILTER_STUDENTS,
   SEARCH_TYPINGS,
-  CLEAR_TYPINGS_SEARCH
+  CLEAR_TYPINGS_SEARCH,
+  CLOSE_EDIT_STUDNET,
+  ACCEPT_CHANGES_STUDENT,
 } from "../ActionTypes/actionTypes";
+import { getData } from "./fbActions";
 
 
-export const setFaculty = (faculties) => ({
-  type: ADD_FACULTY, faculties: { id: faculties.id, facultyName: faculties.payload }
-})
+export const setFaculty =  (faculties)  => (dispatch) => {
 
-export const setStudent = (student) => {
+
+    db.collection('faculties').add( {
+      facultyName: faculties.payload
+    })
+    
+    dispatch(getData("faculties"));
+
+    return {
+     type: ADD_FACULTY, faculties: {facultyName: faculties.payload }
+    }
+
+} 
+
+export const setStudent = (student) =>  {
 
   return {
     type: ADD_STUDENT,
@@ -158,7 +173,7 @@ export const acceptChangesGroup = (data) => (dispatch, getstate) => {
   });
 };
 export const acceptChangesStudnet = (data) => (dispatch, getstate) => {
-  const student = getstate().students.map((item) => {
+  const students = getstate().students.map((item) => {
     if (item.id === data.payload.id) {
       return {
         ...item,
@@ -166,18 +181,35 @@ export const acceptChangesStudnet = (data) => (dispatch, getstate) => {
         lastName: data.payload.lastName,
         email: data.payload.email,
         phone: data.payload.phone,
-        facultyName: data.payload.faculty,
-        groupName: data.payload.group,
+        faculty: data.payload.faculty,
+        group: data.payload.group,
         input: false,
       };
     }
     return item;
   });
-  console.log(student)
-  // return dispatch({
-  //   type: ACCEPT_CHANGES_STUDENT,
-  //   student
-  // });
+
+  return dispatch({
+    type: ACCEPT_CHANGES_STUDENT,
+    students,
+  });
+};
+
+export const closeEditStudent = () => (dispatch, getstate) => {
+  const students = getstate().students.map((item) => {
+    if (item.input === true) {
+      return {
+        ...item,
+        input: false,
+      };
+    }
+    return item;
+  });
+
+  return dispatch({
+    type: CLOSE_EDIT_STUDNET,
+    students,
+  });
 };
 
 export const inputFaculty = (id) => (dispatch, getstate) => {
@@ -315,18 +347,10 @@ export const clearTypings = () => (dispatch) => {
   }))
 }
 
-export const multiFilter = () => (dispatch, getstate) => {
-
-  const students = getstate().students
-  const searchTypings = getstate().searchTypings
-  // console.log(searchTypings)
-  // const dashboardFilter = getstate().dashboardFilter
-
-  console.log(searchTypings)
-
-
-  const filterStudnets = students.filter(item => {
-
+export const multiFilter = () => async (dispatch, getstate) => {
+  const students = await getstate().students;
+  const searchTypings = getstate().searchTypings;
+  const filterStudnets = students.filter((item) => {
     return (
       item.firstName.toLowerCase().indexOf(searchTypings.firstName) >= 0 &&
       item.lastName.toLowerCase().indexOf(searchTypings.lastName) >= 0 &&
@@ -334,20 +358,15 @@ export const multiFilter = () => (dispatch, getstate) => {
       item.phone.indexOf(searchTypings.phone) >= 0 &&
       item.faculty.indexOf(searchTypings.faculty) >= 0 &&
       item.group.indexOf(searchTypings.group) >= 0
-
-    )
+    );
   });
-  // console.log(filterStudnets)
-  return dispatch(({
+  console.log(filterStudnets);
+
+  return dispatch({
     type: FILTER_STUDENTS,
-    dashboardFilter: filterStudnets
-  }))
-
-
-
-
-
-}
+    dashboardFilter: filterStudnets,
+  });
+};
 export const typingChange = (data) => (dispatch, getstate) => {
 
 
@@ -378,8 +397,8 @@ export const typingChange = (data) => (dispatch, getstate) => {
 
   }
 
-  return dispatch(({
+  return dispatch({
     type: SEARCH_TYPINGS,
-    searchTypings
-  }))
+    searchTypings,
+  });
 }

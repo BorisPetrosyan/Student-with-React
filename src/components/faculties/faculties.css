@@ -100,3 +100,20 @@
     cursor: pointer;
   }
   
+  .fac-List::-webkit-scrollbar {
+    width: 7px;
+    }
+    
+    .fac-List::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 3px grey; 
+    
+    }
+    
+    .fac-List::-webkit-scrollbar-thumb {
+    background:#b2b5b8; 
+    border-radius: 0px;
+    }
+    
+    .fac-List::-webkit-scrollbar-thumb:hover {
+    background:#9c9c9c;
+    }

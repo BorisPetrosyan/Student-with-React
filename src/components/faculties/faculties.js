@@ -5,7 +5,6 @@ import { Drawer } from '../drawer/drawerFaculty/drawer'
 import './faculties.css'
 import { Buttom } from '../UI/Btn'
 import { FacultyList } from './facultyList'
-import { closeEditFaculty } from '../redux/actions/actions'
 import { getData } from "../redux/actions/fbActions";
 export const Faculties = () => {
 
@@ -14,11 +13,10 @@ export const Faculties = () => {
 
     const faculties = useSelector(state => state.faculties)
     const dispatch = useDispatch()
-    
-    useEffect(() => {
-      dispatch(getData("faculties"));
 
-      return () => dispatch(closeEditFaculty());
+    useEffect(() => {
+        dispatch(getData("faculties"));
+
     }, [dispatch]);
 
 

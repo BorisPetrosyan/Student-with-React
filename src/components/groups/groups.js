@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { Drawer } from "../drawer/drawerFaculty/drawer";
 import { Buttom } from "../UI/Btn";
 import { GroupList } from "./groupList";
-import { closeEditGroup } from "../redux/actions/actions.js";
 import { useDispatch } from "react-redux";
 
 import "./groups.css";
@@ -16,12 +15,11 @@ export const Groups = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getData("groups"));
-
-    return () => dispatch(closeEditGroup());
+    dispatch(getData("faculties"));
   }, [dispatch]);
 
   return (

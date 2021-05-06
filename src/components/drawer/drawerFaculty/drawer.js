@@ -20,22 +20,21 @@ export const Drawer = ({ Open, toggle, id, drawerHeader, faculties, forScema }) 
     if (!Open) errors.group = {}
 
 
-    async function onSubmit(formData) {
-      if (drawerHeader === "Faculty") {
-        dispatch(
-          setFaculty({
-            type: ADD_FACULTY,
-            payload: formData.faculty,
-            id: id + 1,
-          })
-        );
-      }
-      if (drawerHeader === "Group")
-        dispatch(setGroup({ type: ADD_GROUP, payload: formData, id: id + 1 }));
-      toggle();
-      reset();
+    function onSubmit(formData) {
+        if (drawerHeader === "Faculty") {
+            dispatch(
+                setFaculty({
+                    type: ADD_FACULTY,
+                    payload: formData.faculty,
+                })
+            );
+        }
+        if (drawerHeader === "Group")
+            dispatch(setGroup({ type: ADD_GROUP, payload: formData }));
+        toggle();
+        reset();
     }
-   
+
     return (
 
         <div>
@@ -50,8 +49,8 @@ export const Drawer = ({ Open, toggle, id, drawerHeader, faculties, forScema }) 
                         placeholder='type there...'
                     />
                     {
-                        drawerHeader === 'Faculty' ? errors.faculty && <p className='invalid'>{errors.faculty.message}</p> :
-                            errors.group && <p className='invalid'>{errors.group.message}</p>
+                        drawerHeader === 'Faculty' ? errors.faculty && <p className='invalid fadeIn animatedd'>{errors.faculty.message}</p> :
+                            errors.group && <p className='invalid fadeIn animatedd'>{errors.group.message}</p>
 
                     }
                     {
@@ -70,7 +69,7 @@ export const Drawer = ({ Open, toggle, id, drawerHeader, faculties, forScema }) 
                             : null
 
                     }
-                    {drawerHeader === 'Group' ? errors.faculty && <p className='invalid'>{errors.faculty.message}</p> : null}
+                    {drawerHeader === 'Group' ? errors.faculty && <p className='invalid fadeIn animatedd'>{errors.faculty.message}</p> : null}
                     <div>
                         <button
                             type="submit"

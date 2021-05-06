@@ -4,11 +4,6 @@ import { db } from "../../../config/fbConfig";
 import {
   ACCEPT_CHANGES,
   ACCEPT_CHANGES_GROUP,
-  ADD_FACULTY,
-  ADD_GROUP,
-  ADD_STUDENT,
-  CLOSE_EDIT_FACULTY,
-  CLOSE_EDIT_GROUP,
   DELETE_FACULTY,
   DELETE_GROUP,
   DELETE_STUDENT,
@@ -18,57 +13,41 @@ import {
   FILTER_STUDENTS,
   SEARCH_TYPINGS,
   CLEAR_TYPINGS_SEARCH,
-  CLOSE_EDIT_STUDNET,
   ACCEPT_CHANGES_STUDENT,
 } from "../ActionTypes/actionTypes";
 import { getData } from "./fbActions";
 
 
-export const setFaculty =  (faculties)  => (dispatch) => {
+export const setFaculty = (faculties) => (dispatch) => {
+  db.collection('faculties').add({
+    facultyName: faculties.payload
+  })
+  dispatch(getData("faculties"));
 
+}
 
-    db.collection('faculties').add( {
-      facultyName: faculties.payload
-    })
-    
-    dispatch(getData("faculties"));
+export const setStudent = (student) => (dispatch) => {
 
-    return {
-     type: ADD_FACULTY, faculties: {facultyName: faculties.payload }
-    }
+  db.collection('students').add({
+    firstName: student.payload.firstName,
+    lastName: student.payload.lastName,
+    email: student.payload.email,
+    phone: student.payload.phone,
+    faculty: student.payload.faculty,
+    group: student.payload.group,
+  })
 
-} 
-
-export const setStudent = (student) =>  {
-
-  return {
-    type: ADD_STUDENT,
-    students: {
-      id: student.id,
-      firstName: student.payload.firstName,
-      lastName: student.payload.lastName,
-      email: student.payload.email,
-      phone: student.payload.phone,
-      faculty: student.payload.faculty,
-      group: student.payload.group,
-    },
-  };
+  dispatch(getData("students"));
 };
 
 
 
-export const setGroup = (groups) => {
-
-
-
-  return ({
-
-    type: ADD_GROUP, groups: {
-      id: groups.id,
-      groupName: groups.payload.group,
-      facultyName: groups.payload.faculty
-    }
+export const setGroup = (groups) => (dispatch) => {
+  db.collection('groups').add({
+    groupName: groups.payload.group,
+    facultyName: groups.payload.faculty
   })
+  dispatch(getData("groups"));
 }
 
 
@@ -195,22 +174,7 @@ export const acceptChangesStudnet = (data) => (dispatch, getstate) => {
   });
 };
 
-export const closeEditStudent = () => (dispatch, getstate) => {
-  const students = getstate().students.map((item) => {
-    if (item.input === true) {
-      return {
-        ...item,
-        input: false,
-      };
-    }
-    return item;
-  });
 
-  return dispatch({
-    type: CLOSE_EDIT_STUDNET,
-    students,
-  });
-};
 
 export const inputFaculty = (id) => (dispatch, getstate) => {
 
@@ -300,39 +264,8 @@ export const inputGroup = (id) => (dispatch, getstate) => {
 
 
 
-export const closeEditFaculty = () => (dispatch, getstate) => {
-  const faculties = getstate().faculties.map((item) => {
-    if (item.input === true) {
-      return {
-        ...item,
-        input: false,
-      };
-    }
-    return item;
-  });
 
-  return dispatch({
-    type: CLOSE_EDIT_FACULTY,
-    faculties,
-  });
-};
 
-export const closeEditGroup = () => (dispatch, getstate) => {
-  const groups = getstate().groups.map((item) => {
-    if (item.input === true) {
-      return {
-        ...item,
-        input: false,
-      };
-    }
-    return item;
-  });
-
-  return dispatch({
-    type: CLOSE_EDIT_GROUP,
-    groups,
-  });
-}
 export const clearTypings = () => (dispatch) => {
   return dispatch(({
     type: CLEAR_TYPINGS_SEARCH,

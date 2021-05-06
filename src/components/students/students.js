@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StudentDrawer } from '../drawer/studentDrawer/studentDrawer'
-import { closeEditStudent } from "../redux/actions/actions";
+
 import { Buttom } from '../UI/Btn'
 
 import './students.css'
@@ -19,13 +19,13 @@ export const Students = () => {
 
   const dispatch = useDispatch()
 
- 
-   useEffect(() => {
-     
+
+  useEffect(() => {
+
     dispatch(getData("students"));
-  
-  
-    return () => dispatch(closeEditStudent());
+    dispatch(getData("faculties"));
+    dispatch(getData("groups"));
+
   }, [dispatch]);
   return (
     <div className="stu-contanier">
@@ -39,7 +39,7 @@ export const Students = () => {
         />
 
         <div style={{ marginLeft: -240 }}>
-       <Buttom
+          <Buttom
             forStudent={true}
             btnName={"studnet"}
             toggle={toggle}
@@ -55,4 +55,3 @@ export const Students = () => {
     </div>
   );
 };
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
